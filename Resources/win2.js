@@ -6,20 +6,20 @@ jsonParse = JSON.parse(jsonText);
 
 
 
-var ddd = win.title;
-var depricated=jsonParse[ddd].depricated;
-var description=jsonParse[ddd].description;
-var events=jsonParse[ddd].events;
-var examples=jsonParse[ddd].examples;
-var methods=jsonParse[ddd].methods;
-var objects=jsonParse[ddd].objects;
-var parameters=jsonParse[ddd].parameters;
-var platforms=jsonParse[ddd].platforms;
-var properties=jsonParse[ddd].properties;
-var returns=jsonParse[ddd].returns;
-var since=jsonParse[ddd].since;
-var subtype=jsonParse[ddd].subtype;
-var type=jsonParse[ddd].type;
+var firstLevel = win.title;
+var depricated=jsonParse[firstLevel].depricated;
+var description=jsonParse[firstLevel].description;
+var events=jsonParse[firstLevel].events;
+var examples=jsonParse[firstLevel].examples;
+var methods=jsonParse[firstLevel].methods;
+var objects=jsonParse[firstLevel].objects;
+var parameters=jsonParse[firstLevel].parameters;
+var platforms=jsonParse[firstLevel].platforms;
+var properties=jsonParse[firstLevel].properties;
+var returns=jsonParse[firstLevel].returns;
+var since=jsonParse[firstLevel].since;
+var subtype=jsonParse[firstLevel].subtype;
+var type=jsonParse[firstLevel].type;
 description = description.replace(/(<br>)|(<\/p>)|(<\/h.?>)/,'\n').replace(/<[^>]+>/g, '');
 /*
 Ti.API.info("depricated: "+depricated);
@@ -57,22 +57,22 @@ if (description == null){} else {
 	x++;
 }
 
-var row = Ti.UI.createTableViewRow({header:'objects/methods/events'});
-if (objects.length == 0){text = 'no objects';} else { text = 'objects';}
+var row = Ti.UI.createTableViewRow({goTo:'objects',header:'objects/methods/events'});
+if (objects.length == 0){text = 'no objects';row.goTo=null;} else { text = 'objects';}
 var label = Ti.UI.createLabel({left:10,right:10,text:text});
 row.add(label);
 tableData[x] = row;
 x++;
 
-var row = Ti.UI.createTableViewRow({});
-if (methods.length == 0){text = 'no methods';} else { text = 'methods';}
+var row = Ti.UI.createTableViewRow({goTo:'methods'});
+if (methods.length == 0){text = 'no methods';row.goTo=null;} else { text = 'methods';}
 var label = Ti.UI.createLabel({left:10,right:10,text:text});
 row.add(label);
 tableData[x] = row;
 x++;
 
-var row = Ti.UI.createTableViewRow({});
-if (events.length == 0){text = 'no events';}else { text = 'events';}
+var row = Ti.UI.createTableViewRow({goTo:'events'});
+if (events.length == 0){text = 'no events';row.goTo=null;}else { text = 'events';}
 var label = Ti.UI.createLabel({left:10,right:10,text:text});
 row.add(label);
 tableData[x] = row;
@@ -152,7 +152,13 @@ row.add(label);
 tableData[x] = row;
 x++;
 
-
-
 var table = Ti.UI.createTableView({data : tableData,style:Titanium.UI.iPhone.TableViewStyle.GROUPED});
 win.add(table);
+table.addEventListener('click', function(e){
+
+	var secondLevel = e.rowData.goTo;
+	if (secondLevel == null){} else {
+		var win3 = Ti.UI.createWindow({url:'win3.js',firstLevel:firstLevel,secondLevel:secondLevel});
+		Ti.UI.currentTab.open(win3);
+	}
+});
