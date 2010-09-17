@@ -3,7 +3,6 @@ var jsonFile = Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory,'title.jso
 jsonText = jsonFile.read();
 
 jsonParse = JSON.parse(jsonText);
-Ti.API.info(jsonParse.all.length);
 
 var view = Ti.UI.createView();
 var tableView = Ti.UI.createTableView({});
@@ -21,6 +20,6 @@ win.add(view);
 
 tableView.addEventListener('click',function(e){
 	win2 = Ti.UI.createWindow({url:'win2.js',title:e.rowData.rowTitle});
-	Ti.API.info(e.rowData.rowTitle);
 	Ti.UI.currentTab.open(win2);
 });
+Ti.API.info("api.js");

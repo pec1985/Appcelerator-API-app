@@ -5,7 +5,7 @@ jsonText = jsonFile.read();
 jsonParse = JSON.parse(jsonText);
 
 
-
+Ti.API.info(win.title);
 var firstLevel = win.title;
 var depricated=jsonParse[firstLevel].depricated;
 var description=jsonParse[firstLevel].description;
@@ -154,11 +154,21 @@ x++;
 
 var table = Ti.UI.createTableView({data : tableData,style:Titanium.UI.iPhone.TableViewStyle.GROUPED});
 win.add(table);
-table.addEventListener('click', function(e){
 
+table.addEventListener('click', function(e){
 	var secondLevel = e.rowData.goTo;
-	if (secondLevel == null){} else {
-		var win3 = Ti.UI.createWindow({url:'win3.js',firstLevel:firstLevel,secondLevel:secondLevel});
+	if (secondLevel == 'methods'){
+		var win3 = Ti.UI.createWindow({url:'methods_list.js',firstLevel:firstLevel,secondLevel:secondLevel});
+		Ti.UI.currentTab.open(win3);
+	}
+	if (secondLevel == 'objects'){
+		var win3 = Ti.UI.createWindow({url:'objects_list.js',firstLevel:firstLevel,secondLevel:secondLevel});
+		Ti.UI.currentTab.open(win3);
+	}
+	if (secondLevel == 'events'){
+		var win3 = Ti.UI.createWindow({url:'events_list.js',firstLevel:firstLevel,secondLevel:secondLevel});
 		Ti.UI.currentTab.open(win3);
 	}
 });
+
+Ti.API.info("win2.js");
